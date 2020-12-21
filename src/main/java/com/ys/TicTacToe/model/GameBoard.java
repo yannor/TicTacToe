@@ -1,23 +1,33 @@
 package com.ys.TicTacToe.model;
 
 public class GameBoard {
-	 private int[] boardPlacements;
+	private Integer[] boardPlacements;
 
 	public GameBoard() {
 		super();
-		this.boardPlacements =  new int[9];
+		this.boardPlacements = new Integer[9];
 	}
-	 
-	 
-	
-	public int[] getBoardPlacements() {
+
+	public GameBoard(Integer[] boardPlacements) {
+		super();
+		this.boardPlacements = boardPlacements;
+	}
+
+	public Integer[] getBoardPlacements() {
 		return boardPlacements;
 	}
+	
+	
 
+	public void setBoardPlacements(Integer[] boardPlacements) {
+		this.boardPlacements = boardPlacements;
+	}
 
 	public String printBoard() {
-		
+
 		return "";
 	}
+
 	
+
 }

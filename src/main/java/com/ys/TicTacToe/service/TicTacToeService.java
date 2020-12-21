@@ -8,6 +8,7 @@ package com.ys.TicTacToe.service;
 import org.springframework.stereotype.Component;
 
 import com.ys.TicTacToe.model.GameBoard;
+import com.ys.TicTacToe.model.PlayerEnum;
 
 /**
  *
@@ -15,31 +16,28 @@ import com.ys.TicTacToe.model.GameBoard;
  */
 
 @Component
-public class TicTacToeService {
+public interface TicTacToeService {
 
-	private GameBoard gameBoard;
-	private boolean winner;
+	/*
+	 * Place X or O on the given board on the given place. An X or O is placed
+	 * depending on how filled the board is already.
+	 * 
+	 * @param board: The board that is being played
+	 * 
+	 * @param place: An integer between 0 and 9 where the new player has played.
+	 * 
+	 * @return the board filled in with the new placement
+	 */
+	public GameBoard place(GameBoard board, int place);
 
-	public TicTacToeService() {
-		gameBoard = new GameBoard();
-	}
+	/*
+	 * Check if there is a winner on the board.
+	 * 
+	 * @param board: The board that is being played
+	 * 
+	 * @return PlayerEnum: A PlayerEnum telling who won, can be null if no one has
+	 * won.
+	 */
+	public PlayerEnum isThereAWinner(GameBoard board);
 
-	// We can start with a pre-setup board
-	public GameBoard startGamePreSetup(GameBoard gameBoard) {
-		this.gameBoard = gameBoard;
-		
-		return gameBoard;
-	}
-	
-	
-	public GameBoard place(int place) {
-		
-		return gameBoard;
-	}
-	
-public boolean isThereAWinner() {
-	
-	return winner;
-}
-	
 }

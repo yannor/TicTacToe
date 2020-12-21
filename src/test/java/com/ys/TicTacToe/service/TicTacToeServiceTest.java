@@ -1,17 +1,22 @@
 package com.ys.TicTacToe.service;
 
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.junit.Ignore;
+import org.junit.jupiter.api.Test;
+import org.omg.PortableServer.Servant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.ys.TicTacToe.model.GameBoard;
+import com.ys.TicTacToe.model.PlayerEnum;
 
 @SpringBootTest
-@RunWith(JUnit4.class)
-class TicTacToeServiceTest {
+public class TicTacToeServiceTest {
 
 	private GameBoard gameBoard;
 
@@ -24,33 +29,87 @@ class TicTacToeServiceTest {
 	}
 
 	@Test
-	private void startGamePreSetup() {
+	@Ignore
+	public void placeOneX() {
+		ticTacToeService.place(gameBoard, 0);
 
+		Integer[] expectedPlacements = { 1, null, null, null, null, null, null, null, null };
+		assertEquals(expectedPlacements, gameBoard.getBoardPlacements());
 	}
 
 	@Test
-	private void placeX() {
+	@Ignore
+	public void placeOneO() {
+		Integer[] beginSituation = { 1, null, null, null, null, null, null, null, null };
+		gameBoard.setBoardPlacements(beginSituation);
 
+		ticTacToeService.place(gameBoard, 5);
+
+		Integer[] expectedPlacements = { 1, null, null, null, null, 2, null, null, null };
+		assertEquals(expectedPlacements, gameBoard.getBoardPlacements());
 	}
 
 	@Test
-	private void placeO() {
+	@Ignore
+	public void placeInvalid() {
 
+		Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+			ticTacToeService.place(gameBoard, 12);
+		});
+
+		String expectedMessage = "This is not a valid place. The place has to be between 1 and 9";
+		String actualMessage = exception.getMessage();
+
+		assertTrue(actualMessage.contains(expectedMessage));
 	}
 
 	@Test
-	private void placeInvalid() {
+	@Ignore
+	public void placeAfterWinner() {
+		Integer[] placements = { 1, 1, 1, 2, null, null, 2, null, null };
+		gameBoard.setBoardPlacements(placements);
 
+		PlayerEnum winner = ticTacToeService.isThereAWinner(gameBoard);
+		assertEquals(PlayerEnum.PLAYERX, winner);
+
+		Exception exception = assertThrows(IllegalStateException.class, () -> {
+			ticTacToeService.place(gameBoard, 4);
+		});
+
+		String expectedMessage = "We already have a winner. Nothing more can be placed.";
+		String actualMessage = exception.getMessage();
+
+		assertTrue(actualMessage.contains(expectedMessage));
 	}
 
 	@Test
-	private void placeWinningX() {
+	@Ignore
+	public void weHaveNoWinner() {
+		Integer[] placements = { 1, 1, 2, 2, 1, 2, null, null, null };
+		gameBoard.setBoardPlacements(placements);
 
+		PlayerEnum winner = ticTacToeService.isThereAWinner(gameBoard);
+		assertNull(winner);
 	}
 
 	@Test
-	private void placeWinningO() {
+	@Ignore
+	public void weHaveWinnerX() {
+		Integer[] placements = { 1, 1, 1, 2, null, null, 2, null, null };
+		gameBoard.setBoardPlacements(placements);
 
+		PlayerEnum winner = ticTacToeService.isThereAWinner(gameBoard);
+		assertEquals(PlayerEnum.PLAYERX, winner);
+	}
+
+	@Test
+	@Ignore
+	public void weHaveWinnerO() {
+		Integer[] placements = { 1, null, 1, 2, 2, 2, 1, null, null };
+		gameBoard.setBoardPlacements(placements);
+
+		PlayerEnum winner = ticTacToeService.isThereAWinner(gameBoard);
+		assertEquals(PlayerEnum.PLAYERO, winner);
 	}
 
 }

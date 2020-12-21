@@ -5,10 +5,12 @@
  */
 package com.ys.TicTacToe.config;
 
-import com.ys.TicTacToe.service.TicTacToeService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+
+import com.ys.TicTacToe.service.TicTacToeService;
+import com.ys.TicTacToe.service.TicTacToeServiceImpl;
 
 /**
  *
@@ -20,6 +22,6 @@ public class Beans {
 
 	@Bean
 	public TicTacToeService autowiredTicTacToeService() {
-		return new TicTacToeService();
+		return new TicTacToeServiceImpl();
 	}
 }
