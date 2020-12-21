@@ -18,6 +18,7 @@ import com.ys.TicTacToe.model.GameBoard;
 public class TicTacToeService {
 
 	private GameBoard gameBoard;
+	private boolean winner;
 
 	public TicTacToeService() {
 		gameBoard = new GameBoard();
@@ -35,5 +36,10 @@ public class TicTacToeService {
 		
 		return gameBoard;
 	}
+	
+public boolean isThereAWinner() {
+	
+	return winner;
+}
 	
 }
