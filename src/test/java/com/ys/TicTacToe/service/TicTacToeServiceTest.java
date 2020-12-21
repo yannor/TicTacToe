@@ -5,10 +5,9 @@ import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.Before;
 import org.junit.Ignore;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.omg.PortableServer.Servant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -23,8 +22,8 @@ public class TicTacToeServiceTest {
 	@Autowired
 	private TicTacToeService ticTacToeService;
 
-	@Before
-	public void setUp() {
+	@BeforeEach
+	public void setUp() {	
 		gameBoard = new GameBoard();
 	}
 
