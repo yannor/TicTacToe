@@ -39,5 +39,25 @@ public interface TicTacToeService {
 	 * won.
 	 */
 	public PlayerEnum isThereAWinner(GameBoard board);
+	
+	
+	/*
+	 * Decide which player's turn it is.
+	 * 
+	 * @param board: The board that is being played
+	 * 
+	 * @return String: X or O, depending on which player's turn it is.
+	 */
+	public String decidePlayer(GameBoard board);
+
+	
+	/*
+	 * Check if every position is played.
+	 * 
+	 * @param board: The board that is being played
+	 * 
+	 * @return Boolean: true if all places are occupied.
+	 */
+	public boolean isBoardFull(GameBoard gameBoard);
 
 }

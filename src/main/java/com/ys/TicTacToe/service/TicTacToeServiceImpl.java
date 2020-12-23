@@ -25,7 +25,7 @@ public class TicTacToeServiceImpl implements TicTacToeService {
                      && board.getBoardPlacements()[position[0]] == board.getBoardPlacements()[position[2]]) {
             	 
             	 // We have a winner
-            	 return board.getBoardPlacements()[position[0]] == 1?  PlayerEnum.PLAYERX : PlayerEnum.PLAYERO;
+            	 return board.getBoardPlacements()[position[0]] == "X"?  PlayerEnum.PLAYERX : PlayerEnum.PLAYERO;
                 
              }
 		 }
@@ -34,8 +34,8 @@ public class TicTacToeServiceImpl implements TicTacToeService {
 		return null;
 	}
 
-	private int decidePlayer(GameBoard board) {
-		return Arrays.stream(board.getBoardPlacements()).filter(i -> i != null).count() % 2 == 0 ? 1 : 2;
+	public String decidePlayer(GameBoard board) {
+		return Arrays.stream(board.getBoardPlacements()).filter(i -> i != null).count() % 2 == 0 ? "X" : "O";
 	}
 	
 	private void validatePlacement(GameBoard board, int place) {
@@ -50,5 +50,17 @@ public class TicTacToeServiceImpl implements TicTacToeService {
 		if(isThereAWinner(board)!= null) {
 			throw new IllegalStateException("We already have a winner. Nothing more can be placed.");
 		}
+	}
+
+
+	@Override
+	public boolean isBoardFull(GameBoard gameBoard) {
+		for(String x : gameBoard.getBoardPlacements()) {
+			// An open position has be found so its not full
+			if(x == null) {
+				return false;
+			}
+		}
+		return true;
 	}
 }

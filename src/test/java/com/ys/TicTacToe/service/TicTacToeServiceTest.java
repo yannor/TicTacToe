@@ -1,5 +1,6 @@
 package com.ys.TicTacToe.service;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
@@ -7,7 +8,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Arrays;
 
-import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,29 +30,26 @@ public class TicTacToeServiceTest {
 	}
 
 	@Test
-	@Ignore
 	public void placeOneX() {
 		ticTacToeService.place(gameBoard, 1);
 
-		Integer[] expectedPlacements = { 1, null, null, null, null, null, null, null, null };
+		String[] expectedPlacements = { "X", null, null, null, null, null, null, null, null };
 		assertTrue(Arrays.equals(expectedPlacements, gameBoard.getBoardPlacements()));
 	}
 
 	@Test
-	@Ignore
 	public void placeOneO() {
-		Integer[] beginSituation = { 1, null, null, null, null, null, null, null, null };
+		String[] beginSituation = { "X", null, null, null, null, null, null, null, null };
 		gameBoard.setBoardPlacements(beginSituation);
 
 		ticTacToeService.place(gameBoard, 5);
 
-		Integer[] expectedPlacements = { 1, null, null, null, 2, null, null, null, null };
+		String[] expectedPlacements = { "X", null, null, null, "O", null, null, null, null };
 
 		assertTrue(Arrays.equals(expectedPlacements, gameBoard.getBoardPlacements()));
 	}
 
 	@Test
-	@Ignore
 	public void placeInvalidNotExisting() {
 
 		Exception exception = assertThrows(IllegalArgumentException.class, () -> {
@@ -66,9 +63,8 @@ public class TicTacToeServiceTest {
 	}
 
 	@Test
-	@Ignore
 	public void placeInvalidNotAlreadyPlaced() {
-		Integer[] beginSituation = { 1, null, null, null, null, null, null, null, null };
+		String[] beginSituation = { "X", null, null, null, null, null, null, null, null };
 		gameBoard.setBoardPlacements(beginSituation);
 		Exception exception = assertThrows(IllegalArgumentException.class, () -> {
 			ticTacToeService.place(gameBoard, 1);
@@ -81,9 +77,8 @@ public class TicTacToeServiceTest {
 	}
 
 	@Test
-	@Ignore
 	public void placeAfterWinner() {
-		Integer[] placements = { 1, 1, 1, 2, null, null, 2, null, null };
+		String[] placements = { "X", "X", "X", "O", null, null, "O", null, null };
 		gameBoard.setBoardPlacements(placements);
 
 		PlayerEnum winner = ticTacToeService.isThereAWinner(gameBoard);
@@ -100,9 +95,8 @@ public class TicTacToeServiceTest {
 	}
 
 	@Test
-	@Ignore
 	public void weHaveNoWinner() {
-		Integer[] placements = { 1, 1, 2, 2, 1, 2, null, null, null };
+		String[] placements = { "X", "X", "O", "O", "X", "O", null, null, null };
 		gameBoard.setBoardPlacements(placements);
 
 		PlayerEnum winner = ticTacToeService.isThereAWinner(gameBoard);
@@ -110,9 +104,8 @@ public class TicTacToeServiceTest {
 	}
 
 	@Test
-	@Ignore
 	public void weHaveWinnerX() {
-		Integer[] placements = { 1, 1, 1, 2, null, null, 2, null, null };
+		String[] placements = { "X", "X", "X", "O", null, null, "O", null, null };
 		gameBoard.setBoardPlacements(placements);
 
 		PlayerEnum winner = ticTacToeService.isThereAWinner(gameBoard);
@@ -120,13 +113,26 @@ public class TicTacToeServiceTest {
 	}
 
 	@Test
-	@Ignore
 	public void weHaveWinnerO() {
-		Integer[] placements = { 1, null, 1, 2, 2, 2, 1, null, null };
+		String[] placements = { "X", null, "X", "O", "O", "O", "X", null, null };
 		gameBoard.setBoardPlacements(placements);
 
 		PlayerEnum winner = ticTacToeService.isThereAWinner(gameBoard);
 		assertEquals(PlayerEnum.PLAYERO, winner);
+	}
+	
+	@Test
+	public void isBoardFullTrue() {
+		String[] placements = { "X", "X", "X", "O", "X", "O", "X", "X", "X" };
+		gameBoard.setBoardPlacements(placements);
+		assertTrue(ticTacToeService.isBoardFull(gameBoard));
+	}
+	
+	@Test
+	public void isBoardFullFalse() {
+		String[] placements = { "X", null, "X", "O", null, "O", "X", null, null };
+		gameBoard.setBoardPlacements(placements);
+		assertFalse(ticTacToeService.isBoardFull(gameBoard));
 	}
 
 }
